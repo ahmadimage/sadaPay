@@ -1,13 +1,11 @@
 package com.wallet.sadapay.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.wallet.sadapay.ui.Splash.AnimatedSplashScreen
-import com.wallet.sadapay.ui.Splash.SplashScreen
-import com.wallet.sadapay.ui.msisdn.LoginScreen
+import com.wallet.sadapay.ui.msisdn.LoginMsisdnScreen
 
 @Composable
 fun SetupNavGraph(
@@ -26,7 +24,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.Login.route
         ){
-            LoginScreen()
+            LoginMsisdnScreen()
         }
     }
 }
