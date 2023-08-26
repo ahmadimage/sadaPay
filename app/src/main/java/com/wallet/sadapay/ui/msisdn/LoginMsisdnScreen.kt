@@ -14,15 +14,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.wallet.sadapay.R
+import com.wallet.sadapay.ui.theme.GreyHint
 import com.wallet.sadapay.ui.theme.OrangePrimary
 
 @Composable
@@ -36,7 +39,14 @@ fun LoginMsisdnScreen() {
         ScreenTitle(modifier = Modifier, title = stringResource(id = R.string.get_started))
         ScreenSubtitle(modifier = Modifier, text = stringResource(id = R.string.enter_mobile_number))
         //DropdownMenuExample()
-        CountrySelectPill(modifier = Modifier)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            CountrySelectPill(modifier = Modifier)
+            Spacer(modifier = Modifier.width(8.dp))
+            MsisdnField(modifier = Modifier)
+        }
     }
 }
 
@@ -71,8 +81,12 @@ fun ScreenSubtitle(modifier: Modifier, text: String) {
 @Composable
 fun CountrySelectPill(modifier: Modifier) {
     Card(
+        modifier = modifier.height(38.dp),
         shape = RoundedCornerShape(60),
         elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -104,16 +118,45 @@ fun CountrySelectPill(modifier: Modifier) {
             )
 
             Image(
-                modifier = modifier.constrainAs(ivArrow) {
-                    start.linkTo(tvCountryCode.end, 2.dp)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }.width(24.dp).height(24.dp),
+                modifier = modifier
+                    .constrainAs(ivArrow) {
+                        start.linkTo(tvCountryCode.end, 2.dp)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .width(24.dp)
+                    .height(24.dp),
                 painter = painterResource(id = R.drawable.iv_arrow_drop_down),
                 contentDescription = stringResource(id = R.string.ic_drop_down_desc)
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MsisdnField(modifier: Modifier) {
+    var msisdn by remember { mutableStateOf("")}
+    var hasFocus by remember { mutableStateOf(false)}
+    OutlinedTextField(
+        modifier = modifier
+            .onFocusChanged { focusState -> hasFocus = focusState.isFocused }
+            .height(38.dp),
+        value = msisdn,
+        onValueChange = { msisdn = it },
+        shape = RoundedCornerShape(60),
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.White,
+            cursorColor = OrangePrimary,
+            focusedIndicatorColor = Color.Cyan,
+            unfocusedIndicatorColor = Color.Transparent,
+            placeholderColor = GreyHint
+        ),
+        placeholder = { Text(text = if (hasFocus) " " else "3012345678")},
+        textStyle = TextStyle(
+            fontSize = MaterialTheme.typography.body2.fontSize
+        ),
+    )
 }
 
 @Composable
