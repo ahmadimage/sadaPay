@@ -2,4 +2,6 @@
     <string name="app_name">Sadapay</string>
     <string name="get_started">Let\'s get started!</string>
     <string name="enter_mobile_number">Please enter your mobile number</string>
+    <string name="ic_country_desc">Country icon</string>
+    <string name="ic_drop_down_desc">Drop down icon</string>
 </resources>

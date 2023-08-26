@@ -1,5 +1,6 @@
 package com.wallet.sadapay.ui.msisdn
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -69,41 +71,46 @@ fun ScreenSubtitle(modifier: Modifier, text: String) {
 @Composable
 fun CountrySelectPill(modifier: Modifier) {
     Card(
-        modifier = modifier.padding(10.dp),
         shape = RoundedCornerShape(60),
         elevation = CardDefaults.cardElevation(),
     ) {
         ConstraintLayout(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 16.dp, vertical = 7.dp)
         ) {
-            val (item1, item2, item3) = createRefs()
+            val (ivFlag, tvCountryCode, ivArrow) = createRefs()
 
-            Text(
-                text = "Item 1",
-                modifier = Modifier.constrainAs(item1) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
+            Image(
+                painter = painterResource(id = R.drawable.ic_pk),
+                contentDescription = stringResource(id = R.string.ic_country_desc),
+                modifier = Modifier
+                    .constrainAs(ivFlag) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .width(15.dp)
+                    .height(13.dp)
             )
 
             Text(
-                text = "Item 2",
-                modifier = Modifier.constrainAs(item2) {
-                    start.linkTo(item1.end, 16.dp)
+                text = "+92",
+                modifier = Modifier.constrainAs(tvCountryCode) {
+                    start.linkTo(ivFlag.end, 5.dp)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                }
+                },
+                fontSize = MaterialTheme.typography.body2.fontSize
             )
 
-            Text(
-                text = "Item 3",
-                modifier = Modifier.constrainAs(item3) {
-                    start.linkTo(item2.end, 16.dp)
+            Image(
+                modifier = modifier.constrainAs(ivArrow) {
+                    start.linkTo(tvCountryCode.end, 2.dp)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                }
+                }.width(24.dp).height(24.dp),
+                painter = painterResource(id = R.drawable.iv_arrow_drop_down),
+                contentDescription = stringResource(id = R.string.ic_drop_down_desc)
             )
         }
     }
