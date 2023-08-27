@@ -1,4 +1,4 @@
-package com.wallet.sadapay.ui.msisdn
+package com.wallet.sadapay.ui.msisdn.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -16,6 +17,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -23,20 +25,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wallet.sadapay.R
+import com.wallet.sadapay.ui.msisdn.viewmodel.LoginViewModel
 import com.wallet.sadapay.ui.theme.Cyan_01d3b0
 import com.wallet.sadapay.ui.theme.GreyHint
 import com.wallet.sadapay.ui.theme.OrangePrimary
 
 @Composable
 fun LoginMsisdnScreen() {
+    val viewModel: LoginViewModel = viewModel()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,14 +50,23 @@ fun LoginMsisdnScreen() {
         ScreenTitle(modifier = Modifier, title = stringResource(id = R.string.get_started))
         ScreenSubtitle(modifier = Modifier, text = stringResource(id = R.string.enter_mobile_number))
         //DropdownMenuExample()
+        Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             CountrySelectPill(modifier = Modifier)
             Spacer(modifier = Modifier.width(8.dp))
-            MsisdnField(modifier = Modifier)
+            MsisdnField(modifier = Modifier, viewModel = viewModel)
         }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        ContinueButton(modifier = Modifier, viewModel)
     }
 }
 
@@ -142,12 +155,13 @@ fun CountrySelectPill(modifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MsisdnField(modifier: Modifier) {
+fun MsisdnField(modifier: Modifier, viewModel: LoginViewModel) {
     var msisdn by remember { mutableStateOf("")}
     var hasFocus by remember { mutableStateOf(false)}
+    viewModel.msisdnFieldValue.value = msisdn
     val focusRequester = FocusRequester()
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(38.dp),
         colors = CardDefaults.cardColors(
@@ -168,12 +182,22 @@ fun MsisdnField(modifier: Modifier) {
                 onValueChange = { newText -> msisdn = newText },
                 singleLine = true,
                 textStyle = LocalTextStyle.current.copy(fontSize = MaterialTheme.typography.body2.fontSize),
-                modifier = Modifier.fillMaxWidth()
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                modifier = Modifier
+                    .fillMaxWidth()
                     .focusRequester(focusRequester = focusRequester)
                     .onFocusChanged { isFocused ->
                         hasFocus = isFocused.hasFocus
                     },
                 cursorBrush = SolidColor(OrangePrimary),
+                decorationBox = { innerTextField ->
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        if (msisdn.isEmpty()) {
+                            Text(text = "3012345678", color = GreyHint)
+                        }
+                    }
+                    innerTextField()
+                }
             )
         }
     }
@@ -234,6 +258,47 @@ fun DropdownMenuExample() {
                     },
                     trailingIcon = { Text("F11", textAlign = TextAlign.Center) })
             }
+        }
+    }
+}
+
+@Composable
+fun ContinueButton(modifier: Modifier, viewModel: LoginViewModel) {
+    val isFieldEmpty = viewModel.msisdnFieldValue.value.isEmpty()
+    Button(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(65.dp)
+            .alpha(if (isFieldEmpty) 0.3f else 1f),
+        onClick = {},
+        //enabled = isFieldEmpty,
+        shape = RoundedCornerShape(20),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Black,
+            contentColor = if(isFieldEmpty) OrangePrimary else Color.Cyan
+        )
+    ) {
+        ConstraintLayout(
+            modifier = modifier.fillMaxWidth()
+        ) {
+            val (tvContinue, ivArrow) = createRefs()
+
+            Text(
+                modifier = modifier.constrainAs(tvContinue) {
+                    start.linkTo(parent.start)
+                },
+                text = stringResource(id = R.string.btn_continue),
+                fontSize = MaterialTheme.typography.h6.fontSize,
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            )
+            
+            Image(
+                modifier = modifier.constrainAs(ivArrow) {
+                  end.linkTo(parent.end)
+                },
+                painter = painterResource(id = R.drawable.ic_arrow_right),
+                contentDescription = stringResource(id = R.string.btn_continue_desc))
         }
     }
 }

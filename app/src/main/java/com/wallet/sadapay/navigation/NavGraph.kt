@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.wallet.sadapay.ui.Splash.AnimatedSplashScreen
-import com.wallet.sadapay.ui.msisdn.LoginMsisdnScreen
+import com.wallet.sadapay.ui.msisdn.screens.LoginMsisdnScreen
 
 @Composable
 fun SetupNavGraph(

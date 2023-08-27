@@ -4,4 +4,6 @@
     <string name="enter_mobile_number">Please enter your mobile number</string>
     <string name="ic_country_desc">Country icon</string>
     <string name="ic_drop_down_desc">Drop down icon</string>
+    <string name="btn_continue_desc">Continue button</string>
+    <string name="btn_continue">Continue</string>
 </resources>
