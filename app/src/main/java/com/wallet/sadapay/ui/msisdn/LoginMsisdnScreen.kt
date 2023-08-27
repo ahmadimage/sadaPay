@@ -1,9 +1,11 @@
 package com.wallet.sadapay.ui.msisdn
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -14,8 +16,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -23,8 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.wallet.sadapay.R
+import com.wallet.sadapay.ui.theme.Cyan_01d3b0
 import com.wallet.sadapay.ui.theme.GreyHint
 import com.wallet.sadapay.ui.theme.OrangePrimary
 
@@ -138,25 +145,38 @@ fun CountrySelectPill(modifier: Modifier) {
 fun MsisdnField(modifier: Modifier) {
     var msisdn by remember { mutableStateOf("")}
     var hasFocus by remember { mutableStateOf(false)}
-    OutlinedTextField(
-        modifier = modifier
-            .onFocusChanged { focusState -> hasFocus = focusState.isFocused }
+    val focusRequester = FocusRequester()
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
             .height(38.dp),
-        value = msisdn,
-        onValueChange = { msisdn = it },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
         shape = RoundedCornerShape(60),
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.White,
-            cursorColor = OrangePrimary,
-            focusedIndicatorColor = Color.Cyan,
-            unfocusedIndicatorColor = Color.Transparent,
-            placeholderColor = GreyHint
-        ),
-        placeholder = { Text(text = if (hasFocus) " " else "3012345678")},
-        textStyle = TextStyle(
-            fontSize = MaterialTheme.typography.body2.fontSize
-        ),
-    )
+        border = if(hasFocus) BorderStroke(2.dp, Cyan_01d3b0) else BorderStroke(2.dp, Color.White)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(horizontal = 12.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            BasicTextField(
+                value = msisdn,
+                onValueChange = { newText -> msisdn = newText },
+                singleLine = true,
+                textStyle = LocalTextStyle.current.copy(fontSize = MaterialTheme.typography.body2.fontSize),
+                modifier = Modifier.fillMaxWidth()
+                    .focusRequester(focusRequester = focusRequester)
+                    .onFocusChanged { isFocused ->
+                        hasFocus = isFocused.hasFocus
+                    },
+                cursorBrush = SolidColor(OrangePrimary),
+            )
+        }
+    }
 }
 
 @Composable
