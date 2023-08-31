@@ -66,7 +66,12 @@ fun LoginMsisdnScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.Bottom
     ) {
-        ContinueButton(modifier = Modifier, viewModel)
+        ContinueButton(
+            modifier = Modifier,
+            isButtonEnabled = viewModel.msisdnFieldValue.value.isNotEmpty()
+        ) {
+
+        }
     }
 }
 
@@ -263,19 +268,22 @@ fun DropdownMenuExample() {
 }
 
 @Composable
-fun ContinueButton(modifier: Modifier, viewModel: LoginViewModel) {
-    val isFieldEmpty = viewModel.msisdnFieldValue.value.isEmpty()
+fun ContinueButton(
+    modifier: Modifier,
+    isButtonEnabled: Boolean = false,
+    listener:(Boolean) -> Unit
+) {
     Button(
         modifier = modifier
             .fillMaxWidth()
             .height(65.dp)
-            .alpha(if (isFieldEmpty) 0.3f else 1f),
-        onClick = {},
+            .alpha(if (isButtonEnabled) 0.3f else 1f),
+        onClick = {listener(true)},
         //enabled = isFieldEmpty,
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Black,
-            contentColor = if(isFieldEmpty) OrangePrimary else Color.Cyan
+            contentColor = if(isButtonEnabled) OrangePrimary else Color.Cyan
         )
     ) {
         ConstraintLayout(
