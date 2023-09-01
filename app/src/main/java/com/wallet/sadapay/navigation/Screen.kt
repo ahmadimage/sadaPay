@@ -11,7 +11,7 @@ sealed class Screen(val route: String) {
     object Login: Screen(LOGIN_SCREEN)
     object LoginVerification: Screen("$VERIFICATION_SCREEN/{$MSISDN_ARGUMENT_KEY}") {
         fun passMsisdn(msisdn: String): String {
-            return "$VERIFICATION_SCREEN/{$msisdn}"
+            return "$VERIFICATION_SCREEN/$msisdn"
         }
     }
 }

@@ -30,16 +30,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.wallet.sadapay.R
+import com.wallet.sadapay.navigation.Screen
 import com.wallet.sadapay.ui.msisdn.viewmodel.LoginViewModel
 import com.wallet.sadapay.ui.theme.Cyan_01d3b0
 import com.wallet.sadapay.ui.theme.GreyHint
 import com.wallet.sadapay.ui.theme.OrangePrimary
 
 @Composable
-fun LoginMsisdnScreen() {
+fun LoginMsisdnScreen(navController: NavController) {
     val viewModel: LoginViewModel = viewModel()
     Column(
         modifier = Modifier
@@ -68,9 +72,11 @@ fun LoginMsisdnScreen() {
     ) {
         ContinueButton(
             modifier = Modifier,
-            isButtonEnabled = viewModel.msisdnFieldValue.value.isNotEmpty()
+            isButtonEnabled = viewModel.msisdnFieldValue.value.isEmpty()
         ) {
-
+            navController.navigate(
+                Screen.LoginVerification.passMsisdn(viewModel.msisdnFieldValue.value)
+            )
         }
     }
 }
@@ -82,7 +88,7 @@ fun ScreenTitle(modifier: Modifier, title: String) {
     ) {
         Text(
             text = title,
-            fontSize = MaterialTheme.typography.h4.fontSize,
+            fontSize = 30.sp,
             color = Color.White,
             fontWeight = FontWeight.SemiBold
         )
@@ -314,5 +320,5 @@ fun ContinueButton(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginMsisdnScreen()
+    LoginMsisdnScreen(rememberNavController())
 }
