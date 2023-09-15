@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.wallet.sadapay.ui.Splash.AnimatedSplashScreen
 import com.wallet.sadapay.ui.msisdn.screens.LoginMsisdnScreen
 import com.wallet.sadapay.ui.msisdn.screens.LoginVerificationScreen
+import com.wallet.sadapay.ui.sandbox.SandboxScreen
 
 @Composable
 fun SetupNavGraph(
@@ -37,6 +38,11 @@ fun SetupNavGraph(
             })
         ){
             LoginVerificationScreen(navController = navHostController, it.arguments?.getString(MSISDN_ARGUMENT_KEY))
+        }
+        composable(
+            route = Screen.Sandbox.route
+        ) {
+            SandboxScreen()
         }
     }
 }
