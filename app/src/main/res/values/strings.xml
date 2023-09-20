@@ -10,4 +10,13 @@
     <string name="ic_nav_back_desc">Back button</string>
     <string name="ic_drop_down_desc">Drop down icon</string>
     <string name="btn_continue_desc">Continue button</string>
+
+    <string name="skills">Skills</string>
+    <string name="hobbies">Hobbies</string>
+    <string name="languages">Languages</string>
+    <string name="company">Abc Company</string>
+    <string name="experiences">Experiences</string>
+    <string name="grade">Consultant Developer</string>
+    <string name="professional_summary">Professional Summary</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 </resources>
