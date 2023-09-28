@@ -8,6 +8,8 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_101010">#101010</color>
+    <color name="black_455059">#455059</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_EBE7E7">#EBE7E7</color>
 </resources>
