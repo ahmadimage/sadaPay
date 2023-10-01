@@ -11,5 +11,6 @@
     <color name="black_101010">#101010</color>
     <color name="black_455059">#455059</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red_vader">#EB212E</color>
     <color name="grey_EBE7E7">#EBE7E7</color>
 </resources>
