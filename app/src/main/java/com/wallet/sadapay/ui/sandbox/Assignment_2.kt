@@ -38,7 +38,7 @@ fun Assignment_2() {
             .background(colorResource(id = R.color.black_101010))
     )
     {
-        TopImage()
+        /*TopImage()
         //ToolBarComposable()
         Column(modifier = Modifier.fillMaxWidth()) {
             Spacer(modifier = Modifier.height(100.dp))
@@ -49,10 +49,11 @@ fun Assignment_2() {
             Spacer(modifier = Modifier.height(30.dp))
             SquadronInfo()
         }
-        CustomToolbar()
+        CustomToolbar()*/
     }
 }
 
+/*
 @Composable
 fun ProfileCard(name: String = "Darth Vader", location: String = "Near Alderaan"){
     Box(
@@ -316,4 +317,4 @@ fun TopImage() {
 @Composable
 fun Assignment2Preview() {
     Assignment_2()
-}
+}*/

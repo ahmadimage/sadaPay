@@ -10,6 +10,7 @@ import com.wallet.sadapay.ui.Splash.AnimatedSplashScreen
 import com.wallet.sadapay.ui.msisdn.screens.LoginMsisdnScreen
 import com.wallet.sadapay.ui.msisdn.screens.LoginVerificationScreen
 import com.wallet.sadapay.ui.sandbox.Assignment_2
+import com.wallet.sadapay.ui.sandbox.Assignment_3
 import com.wallet.sadapay.ui.sandbox.SandboxScreen
 
 @Composable
@@ -49,6 +50,11 @@ fun SetupNavGraph(
             route = Screen.Assignment2.route
         ) {
             Assignment_2()
+        }
+        composable(
+            route = Screen.Assignment3.route
+        ) {
+            Assignment_3()
         }
     }
 }
