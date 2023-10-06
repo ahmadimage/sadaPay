@@ -50,7 +50,10 @@ fun Assignment_3() {
         TopImage()
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             item {
-                Spacer(modifier = Modifier.height(100.dp))
+                CustomToolbar()
+            }
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileCard()
             }
             item {
@@ -67,7 +70,6 @@ fun Assignment_3() {
                 Spacer(modifier = Modifier.height(80.dp))
             }
         }
-        CustomToolbar()
     }
 }
 
